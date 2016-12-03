@@ -11,7 +11,7 @@ sap.ui.controller("sap.xs.Exercise3.view.App", {
       			// connection.attachOpen(function (oControlEvent) {
         	// 		sap.m.MessageToast.show("connection opened");
       			// }); 
-      			var client = new Faye.Client('https://hxehost:51004/ws');
+      			var client = new Faye.Client('https://hxehost:51007/ws');
       			var subscription = client.subscribe("/foo",function(message){
       				var oModel = sap.ui.getCore().getModel("chatModel");
       				var result = oModel.getData();
@@ -28,7 +28,7 @@ sap.ui.controller("sap.xs.Exercise3.view.App", {
       			});
       			
 				subscription.then(function(){
-					alert("subscription is not active");
+					alert("subscription is now active");
 				});
 				
       			// server messages
@@ -67,7 +67,7 @@ sap.ui.controller("sap.xs.Exercise3.view.App", {
         			// connection.send(JSON.stringify(
          		// 		{action: "async" }
         			// ));   
-        	var client = new Faye.Client('https://hxehost:51004/ws');
+        	var client = new Faye.Client('https://hxehost:51007/ws');
         	client.publish('/foo', {text: 'Hi there'});
       		},
           //sendFileS: function() {

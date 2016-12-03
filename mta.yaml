@@ -1,5 +1,5 @@
 _schema-version: '2.0'
-ID: xsa-001
+ID: xsa-002
 version: 0.0.1
 
 modules:
@@ -21,4 +21,8 @@ modules:
          name: nodejs
          url: ~{url}
      
+
+ - name: js-client
+   type: nodejs
+   path: js-client
 
