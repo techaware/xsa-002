@@ -1,0 +1,24 @@
+_schema-version: '2.0'
+ID: xsa-001
+version: 0.0.1
+
+modules:
+ - name: js
+   type: nodejs
+   path: js
+   provides:
+    - name: nodejs
+      properties:
+        url: "${default-url}"   
+
+ - name: web
+   type: html5
+   path: web
+   requires:
+     - name: nodejs
+       group: destinations
+       properties:
+         name: nodejs
+         url: ~{url}
+     
+

@@ -1,0 +1,9 @@
+{
+	"welcomeFile": "index.html",
+	"authenticationMethod": "none",
+	"routes": [{
+		"source": "/ws/*",
+		"destination": "nodejs"
+	}]
+
+}
