@@ -14,15 +14,15 @@ modules:
  - name: web
    type: html5
    path: web
-   requires:
-     - name: nodejs
-       group: destinations
-       properties:
-         name: nodejs
-         url: ~{url}
      
 
  - name: js-client
    type: nodejs
    path: js-client
+   requires:
+     - name: nodejs
+       group: destinations
+       properties:
+         name: nodejs
+         url: ~{url}   
 

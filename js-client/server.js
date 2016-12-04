@@ -7,31 +7,63 @@ var faye = require("faye");
 var port = process.env.PORT || 3000;
 var server = require("http").createServer();
 var express = require("express");
-//var fayeClient = require("./fayeClient");
-var auth = 'BWDEVELOPER:Pass4321';
+var WebSocket = require('ws');
 var app = express();
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+//var fayeClient = require("./fayeClient");
+var auth = 'BWDEVELOPER:Pass4321';
+var sapws = 'ws://54.197.26.155:8000/sap/bc/apc/sap/zrah_apc2';
+var fayews = 'https://hxehost:51007/ws';
 
-var WebSocket = require('ws');
+// //Create client for SAP WS
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 var headers = {};
 var options = {};
 if (auth) {
 	headers.Authorization = 'Basic ' + new Buffer(auth).toString('base64');
 }
 options.headers = headers;
-var ws = new WebSocket('ws://54.174.36.55:8000/sap/bc/apc/sap/zrah_apc2', options);
+
+var ws = new WebSocket(sapws, options);
+//Faye Client
+var client = new faye.Client('https://hxehost:51007/ws');
+
 ws.on('open', function(event) {
-	console.log('open');
-	ws.send('Hello, world!');
+	console.log('SAP WS opened');
+	//	ws.send('Hello, world!');
 });
 ws.on('message', function(event) {
 	console.log('message', event);
+	// pass sap message to faye client
+	var publication = client.publish('/foo', {
+		text: event
+	}, function(error) {
+		console.log('There was a problem: ' + error.message);
+	});
 });
 ws.on('close', function(event) {
 	console.log('close', event.code, event.reason);
 	ws = null;
 });
+
+//Faye Client
+//faye.logger = function(msg) {
+//    console.log(msg);
+//};
+//var client = new faye.Client('https://hxehost:51007/ws');
+//var client = new faye.Client('https://hxehost:51012/ws');
+//client.connect();
+// var publication = client.publish('/foo', {
+// 	text: "Hello World!"
+// }, function(error) {
+// 	console.log('There was a problem: ' + error.message);
+// });
+
+// publication.then(function() {
+// 	console.log('Message received by server!');
+// }, function(error) {
+// 	console.log('There was a problem: ' + error.message);
+// });
 
 // var WebSocket = require('faye-websocket'),
 //     // ws        = new WebSocket.Client('ws://echo.websocket.org/');
@@ -80,12 +112,12 @@ ws.on('close', function(event) {
 //     console.log('There was a problem: ' + error.message);
 // });
 
-app.use(function(req, res) {
+// app.use(function(req, res) {
 
-	res.send({
-		msg: "hello from server side client"
-	});
-});
+// 	res.send({
+// 		msg: "hello from server side client"
+// 	});
+// });
 
 // var options = xsjs.extend({
 // 	anonymous : true, // remove to authenticate calls

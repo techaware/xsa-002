@@ -6,18 +6,23 @@ var app = express();
 //var WebSocketServer = require("ws").Server;
 
 module.exports = function(server) {
-	app.use(function(req, res) {
-		res.send({
-			msg: "hello"
-		});
-	});
+	// app.use(function(req, res) {
+	// 	res.send({
+	// 		msg: "hello"
+	// 	});
+	// });
+
+ faye.logger = function(msg) {
+     console.log(msg);
+ };
 
 	var bayeux = new faye.NodeAdapter({
 		mount: '/ws',
 		timeout: 45
 	});
 	bayeux.attach(server);
-
+	
+	
 	// // create a server side client
 	// var client = new faye.Client('https://hxehost:51007/ws', {
 	// 	endpoints: {
