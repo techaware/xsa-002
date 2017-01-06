@@ -3,12 +3,13 @@
 var express = require("express");
 var faye = require("faye");
 var app = express();
-var async = require("async");
-var message = require("./message.js");
+var bx = {};
+//var async = require("async");
+//var message = require("./message2.js");
 
 //var WebSocketServer = require("ws").Server;
 
-module.exports = function(server) {
+module.exports = {
 	// app.use(function(req, res) {
 	// 	res.send({
 	// 		msg: "hello"
@@ -18,14 +19,15 @@ module.exports = function(server) {
 	// faye.logger = function(msg) {
 	// 	console.log(msg);
 	// };
-
-	var bayeux = new faye.NodeAdapter({
+	
+	bayeux: function (server) {
+	bx = new faye.NodeAdapter({
 		mount: '/ws',
 		timeout: 45
 	});
-	bayeux.attach(server);
+	bx.attach(server);
 
-	message(bayeux);
+//	message(bayeux).repeat();
 	
 	// function repeat() {
 	// 	bayeux.getClient().publish('/foo', {
@@ -56,4 +58,8 @@ module.exports = function(server) {
 	// });
 
 	return app;
+	},
+	getBx: function(){
+		return bx;
+	}
 };

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <title>D3 and RxJS</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Wikipedia Updates using RxJS</h1>
+    <h3>Originally from <a href="https://github.com/DanGorst/frp-with-bacon">https://github.com/DanGorst/frp-with-bacon</a></h3>
+    <svg></svg>
+
+   <script src="../asset/rx.all.js"></script>
+    <script src="../asset/d3.js"></script>
+    <script type="text/javascript" src="https://hxehost:51007/ws/client.js"></script>    
+    <script>
+	var fromEvent = Rx.Observable.fromEvent;
+	var updatesOverTime = [];
+        		var ws = new Faye.Client('https://hxehost:51007/ws');
+      			var subscription = ws.subscribe("/store/*",function(message){
+//      				var data = $.parseJSON(message);
+//        			myD3.update(data);
+      			});	
+  var messageStream = fromEvent(ws._dispatcher, 'message');
+  var updateStream = messageStream.map(function(event) {
+//      var dataString = event.data;
+//      return JSON.parse(dataString);
+  });  
+    </script>
+</body>
+</html>

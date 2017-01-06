@@ -12,12 +12,12 @@ sap.ui.controller("sap.xs.Exercise3.view.App", {
         	// 		sap.m.MessageToast.show("connection opened");
       			// }); 
       			var client = new Faye.Client('https://hxehost:51007/ws');
-      			var subscription = client.subscribe("/foo",function(message){
+      			var subscription = client.subscribe("/store/*").withChannel(function(channel,message){
       				var oModel = sap.ui.getCore().getModel("chatModel");
       				var result = oModel.getData();
 
-   //    				var data = jQuery.parseJSON(oControlEvent.getParameter("data"));
-        			msg = message.store + message.product,
+       				var data = jQuery.parseJSON(message);
+        			msg = channel + "/" + data.product + "/" + data.sold,
         			lastInfo = result.chat;
         
        				if(lastInfo.length > 0){ lastInfo += "\r\n"; }  
@@ -26,7 +26,9 @@ sap.ui.controller("sap.xs.Exercise3.view.App", {
        				// scroll to textarea bottom to show new messages
        				$("#app--chatInfo-inner").scrollTop($("#app--chatInfo-inner")[0].scrollHeight);      				
       			});
-      			
+      			client._dispatcher.on('message',function(){
+//      				alert("message received");
+      			});
 				subscription.then(function(){
 					alert("subscription is now active");
 				});

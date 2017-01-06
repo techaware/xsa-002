@@ -7,13 +7,15 @@ var port = process.env.PORT || 3000;
 var server = require("http").createServer();
 var express = require("express");
 var fayeServer = require("./fayeServer");
-var WebSocket = require("faye-websocket");
+//var WebSocket = require("faye-websocket");
+var faye = require("faye");
 var async = require('async');
+var message = require("./message2.js");
 //var ws = new WebSocket.Client('ws://www.example.com/');
 
 var app = express();
-app.use("/", fayeServer(server));
-
+app.use("/", fayeServer.bayeux(server));
+ 
 // var options = xsjs.extend({
 // 	anonymous: true, // remove to authenticate calls
 // 	redirectUrl: "/index.xsjs"
@@ -37,4 +39,5 @@ app.use("/", fayeServer(server));
 server.on("request", app);
 server.listen(port, function() {
 	console.log("HTTP Server: " + server.address().port);
+	message.repeat(fayeServer.getBx());
 });

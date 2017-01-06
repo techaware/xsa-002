@@ -63,7 +63,7 @@
         })();
         
         		var client = new Faye.Client('https://hxehost:51007/ws');
-      			var subscription = client.subscribe("/foo",function(message){
+      			var subscription = client.subscribe("/store/*",function(message){
       				var data = $.parseJSON(message);
         			myD3.update(data);
       			});
