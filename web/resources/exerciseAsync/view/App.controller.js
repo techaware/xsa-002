@@ -17,7 +17,7 @@ sap.ui.controller("sap.xs.Exercise3.view.App", {
       				var result = oModel.getData();
 
    //    				var data = jQuery.parseJSON(oControlEvent.getParameter("data"));
-        			msg = message.text,
+        			msg = message.store + message.product,
         			lastInfo = result.chat;
         
        				if(lastInfo.length > 0){ lastInfo += "\r\n"; }  

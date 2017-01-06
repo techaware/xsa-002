@@ -3,6 +3,9 @@
 var express = require("express");
 var faye = require("faye");
 var app = express();
+var async = require("async");
+var message = require("./message.js");
+
 //var WebSocketServer = require("ws").Server;
 
 module.exports = function(server) {
@@ -12,17 +15,26 @@ module.exports = function(server) {
 	// 	});
 	// });
 
- faye.logger = function(msg) {
-     console.log(msg);
- };
+	// faye.logger = function(msg) {
+	// 	console.log(msg);
+	// };
 
 	var bayeux = new faye.NodeAdapter({
 		mount: '/ws',
 		timeout: 45
 	});
 	bayeux.attach(server);
+
+	message(bayeux);
 	
-	
+	// function repeat() {
+	// 	bayeux.getClient().publish('/foo', {
+	// 		text: 'Repeated Hi'
+	// 	});
+	// }
+
+	// setInterval(repeat, 5000);
+
 	// // create a server side client
 	// var client = new faye.Client('https://hxehost:51007/ws', {
 	// 	endpoints: {
@@ -42,6 +54,6 @@ module.exports = function(server) {
 	// subscription.then(function() {
 	// 	console.log('Subscription is now active!');
 	// });
-	
+
 	return app;
 };

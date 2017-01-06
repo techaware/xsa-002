@@ -8,7 +8,7 @@ var server = require("http").createServer();
 var express = require("express");
 var fayeServer = require("./fayeServer");
 var WebSocket = require("faye-websocket");
-
+var async = require('async');
 //var ws = new WebSocket.Client('ws://www.example.com/');
 
 var app = express();

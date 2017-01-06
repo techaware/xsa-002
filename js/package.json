@@ -4,7 +4,8 @@
 		"sap-xsjs": "1.6.4",
 		"express": "latest",
 		"faye": "latest",
-		"faye-websocket": "latest"
+		"faye-websocket": "latest",
+		"async":"latest"
 	},
 	"description": "",
 	"devDependencies": {
